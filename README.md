@@ -11,7 +11,7 @@ tq@img-preview
 npm install --save tq@img-preview
 ```
 
-### demo
+### DEMO
 
 ```sh
 cd example
@@ -32,57 +32,57 @@ Vue.use(imgPreview)
 对于所有图片都可以使用 v-preview 指令来绑定他们的预览功能
 
 ```HTML
-<section >
-      <div class="title">组1 380 (默认)</div>
-      <img 
-        v-for='(item,index) in list380'
-        :src='item.src'
-        :alt='item.title'
-        v-preview="item.src"
-        group='1'
-        :key='index'
-        class="img"
-      />
-    </section>
+  <section >
+    <div class="title">组1 380 (默认)</div>
+    <img 
+      v-for='(item,index) in list380'
+      :src='item.src'
+      :alt='item.title'
+      v-preview="item.src"
+      group='1'
+      :key='index'
+      class="img"
+    />
+  </section>
+  <div>-----------------------------------------------------------------</div>
+  <section >
+    <div class="title">组2 350(preview-title-enable=false)</div>
+    <img 
+      v-for='(item,index) in list350'
+      :src='item.src'
+      :alt='item.title'
+      v-preview="item.src"
+      group='2'
+      :key='index'
+      preview-title-enable='false'
+      preview-nav-enable='false'
+      class="img"
+    />
+  </section>
+  <div>-----------------------------------------------------------------</div>
+  <section >
+    <div class="title">组3 787</div>
+    <span 
+      v-for='(item,index) in list787'
+      :alt='item.title'
+      v-preview="item.src"
+      group='3'
+      :key='index'
+      class="span"
+    >{{item.title}}</span>
+  </section>
     <div>-----------------------------------------------------------------</div>
-    <section >
-      <div class="title">组2 350(preview-title-enable=false)</div>
-      <img 
-        v-for='(item,index) in list350'
-        :src='item.src'
-        :alt='item.title'
-        v-preview="item.src"
-        group='2'
-        :key='index'
-        preview-title-enable='false'
-        preview-nav-enable='false'
-        class="img"
-      />
-    </section>
-    <div>-----------------------------------------------------------------</div>
-    <section >
-      <div class="title">组3 787</div>
-      <span 
-        v-for='(item,index) in list787'
-        :alt='item.title'
-        v-preview="item.src"
-        group='3'
-        :key='index'
-        class="span"
-      >{{item.title}}</span>
-    </section>
-     <div>-----------------------------------------------------------------</div>
-    <section >
-      <div class="title">组4 单个</div>
-      <img 
-        v-for='(item,index) in list'
-        :src='item.src'
-        :alt='item.title'
-        v-preview="item.src"
-        :key='index'
-        class="img"
-      />
-    </section>
+  <section >
+    <div class="title">组4 单个</div>
+    <img 
+      v-for='(item,index) in list'
+      :src='item.src'
+      :alt='item.title'
+      v-preview="item.src"
+      :key='index'
+      class="img"
+    />
+  </section>
 ```
 
 ```javascript
