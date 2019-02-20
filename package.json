@@ -1,0 +1,33 @@
+{
+  "name": "tq@img-preview",
+  "version": "1.0.0",
+  "description": "a img preview directive",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "vue",
+    "directive"
+  ],
+  "author": "pf",
+  "license": "ISC",
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": { "no-console": 0},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  }
+}
