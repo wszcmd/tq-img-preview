@@ -1,6 +1,6 @@
 fork from https://github.com/xLogic92/vue-picture-preview
 
-tq@img-preview
+tq-img-preview
 =============
 
 ## 安装
@@ -8,7 +8,7 @@ tq@img-preview
 ### NPM
 
 ```sh
-npm install --save tq@img-preview
+npm install --save tq-img-preview
 ```
 
 ### DEMO
@@ -24,7 +24,7 @@ npm run serve
 首先在项目的入口文件中引入, 调用 Vue.use 安装。
 
 ```javascript
-import imgPreview from 'tq@img-preview'
+import imgPreview from 'tq-img-preview'
 Vue.use(imgPreview)
 ```
 
@@ -55,7 +55,6 @@ Vue.use(imgPreview)
       group='2'
       :key='index'
       preview-title-enable='false'
-      preview-nav-enable='false'
       class="img"
     />
   </section>
@@ -113,6 +112,27 @@ export default {
   }
 }
 ```
+
+```css
+<style>
+.title{
+  color: #666;
+  font-size: 14px;
+  line-height: 30px;
+}
+.img{
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+.span{
+  cursor: pointer;
+  color: #2d8cf0;
+  margin-right: 20px;
+}
+</style>
+```
+
 ## API
 
 * **preview-title-enable**: (boolean) 设置 _preview-title-enable="false"_ 将禁用底部标题. 默认值: true.

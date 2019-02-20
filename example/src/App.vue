@@ -23,7 +23,6 @@
         group='2'
         :key='index'
         preview-title-enable='false'
-        preview-nav-enable='false'
         class="img"
       />
     </section>
