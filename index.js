@@ -1,7 +1,7 @@
 import lgPreview from './vue-preview.vue'
 
 export default {
-    install: function (Vue, options) {
+    install: function (Vue, options) { 
         const LOGIC_EVENT_BUS = new Vue({
             data(){
                 return {

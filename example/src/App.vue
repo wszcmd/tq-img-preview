@@ -61,7 +61,7 @@ export default {
     return {
       list380:[
         {src:'http://img6.hangkong.com/118574-99.jpg?0',title:'380-1'},
-        {src:'http://img6.hangkong.com/117998-99.jpg?0',title:'380-2'},
+        {src:'http://www.hangkong.com/uploadfile/2016/1221/20161221111513542.jpg',title:'380-2'},
         {src:'http://img6.hangkong.com/117973-99.jpg?0',title:'380-3'}
       ],
       list350:[

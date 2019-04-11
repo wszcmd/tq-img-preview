@@ -2,13 +2,15 @@
     <transition name="fade">
         <div class="lg-preview-wrapper" v-show="preview.show" @click="leave" @touchmove.prevent>
             <div class="lg-preview-loading" v-show="preview.loading"><div></div></div>
-            <img
+             <img
+                ref="img"
                 class="lg-preview-img"
                 v-if="preview.current.src"
                 :src="preview.current.src"
                 :alt="preview.current.title"
                 v-show="!preview.loading"
             >
+            <div class="close" :style='`left:${left}px;top:${top}px`' v-show="(left+10)&&(top+10)">X</div>
             <div class="lg-preview-title" v-if="preview.isTitleEnable&&preview.current.title" v-show="!preview.loading">
                 {{preview.current.title}}
             </div>
@@ -25,13 +27,32 @@
 <script>
 export default {
     name: 'Preview',
+    data(){
+        return{
+            left:0,
+            top:0,
+        }
+    },
     computed: {
         preview () {
             return window.LOGIC_EVENT_BUS.LOGIC_PREVIEW
         },
         group () {
             return this.preview.current.group
+        },
+    },
+    watch:{
+        preview:{
+            handler(){
+                this.$nextTick( () =>{
+                    this.reset()
+                }) 
+            },
+            deep:true
         }
+    },
+    mounted(){
+        window.addEventListener("resize",this.reset)
     },
     methods: {
         leave (e) {
@@ -53,8 +74,8 @@ export default {
             this.preview.current = this.preview.list[this.group][index]
             const img = new window.Image()
             img.src = this.preview.current.src
-            img.onload = function () {
-                setTimeout(function () {
+            img.onload =  () =>{
+                setTimeout( ()=>{
                     LOGIC_EVENT_BUS.LOGIC_PREVIEW.loading = false
                 },500)
             }
@@ -70,12 +91,18 @@ export default {
             this.preview.current = this.preview.list[this.group][index]
             const img = new window.Image()
             img.src = this.preview.current.src
-            img.onload = function () {
-                setTimeout(function () {
+            img.onload =  () =>{
+                setTimeout( ()=> {
                     LOGIC_EVENT_BUS.LOGIC_PREVIEW.loading = false
                 },500)
             }
         },
+        reset(){
+            if(this.preview.show){
+                this.top = this.$refs.img.offsetTop-10
+                this.left = this.$refs.img.offsetLeft+this.$refs.img.clientWidth-10
+            }
+        }
     }
 }
 </script>
@@ -159,8 +186,8 @@ export default {
 .lg-preview-nav-left,
 .lg-preview-nav-right {
     position: absolute;
-    height: 100%;
-    margin: 0 5px;
+    height: 40%;
+    margin-top: 30vh;
     width: 100px;
     top: 0;
     color: #fff;
@@ -206,5 +233,16 @@ export default {
     .lg-preview-nav-right .lg-preview-nav-arrow {
         margin-right: 20px;
     }
+}
+.close{
+   position: absolute;
+   background: red;
+   color:#fff;
+   width: 20px;
+   height: 20px;
+   border-radius: 10px;
+   line-height: 20px;
+   font-size: 12px;
+   cursor: pointer;
 }
 </style>
