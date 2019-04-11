@@ -82,6 +82,15 @@ export default {
                     getImage(previewItem.src, previewItem)
                 })
             },
+            update: function (el, oldValue) {
+                let group =  el.getAttribute('group')||"tqNoGroup"
+                var previewItem = LOGIC_EVENT_BUS.LOGIC_PREVIEW.list[group].find(function (item) {
+                    return item.el === el
+                })
+                if (!previewItem) return
+                previewItem.src = oldValue.value
+                previewItem.title = el.alt
+            },
             unbind: function (el) {
                 let group =  el.getAttribute('group')||"tqNoGroup"
                 if (el) {
