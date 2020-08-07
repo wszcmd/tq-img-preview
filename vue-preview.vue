@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="lg-preview-wrapper" v-show="preview.show" @click="leave" @touchmove.prevent>
+        <div class="lg-preview-wrapper" v-show="preview.show" @click.stop @touchmove.prevent>
             <div class="lg-preview-loading" v-show="preview.loading"><div></div></div>
              <img
                 ref="img"
@@ -10,15 +10,15 @@
                 :alt="preview.current.title"
                 v-show="!preview.loading"
             >
-            <div class="close" :style='`left:${left}px;top:${top}px`' v-show="(left+10)&&(top+10)">X</div>
+            <div class="close" @click="leave" >&times;</div>
             <div class="lg-preview-title" v-if="preview.isTitleEnable&&preview.current.title" v-show="!preview.loading">
-                {{preview.current.title}}
+                {{preview.current.title}}({{rank}})
             </div>
-            <div class="lg-preview-nav-left" v-if="group!=='tqNoGroup'" v-show="!preview.loading"  @click.stop="preAction" >
-                <span class="lg-preview-nav-arrow"></span>
-            </div>
-            <div class="lg-preview-nav-right" v-if="group!=='tqNoGroup'" v-show="!preview.loading" @click.stop="nextAction">
-                <span class="lg-preview-nav-arrow"></span>
+            <div class="lg-preview-nav-left" v-if="group!=='tqNoGroup'&&!isStart" >
+                <span class="lg-preview-nav-arrow"  @click.stop="preAction"></span>
+            </div> 
+            <div class="lg-preview-nav-right" v-if="group!=='tqNoGroup'&&!isEnd">
+                <span class="lg-preview-nav-arrow"  @click.stop="nextAction"></span>
             </div>
         </div>
     </transition>
@@ -40,19 +40,21 @@ export default {
         group () {
             return this.preview.current.group
         },
-    },
-    watch:{
-        preview:{
-            handler(){
-                this.$nextTick( () =>{
-                    this.reset()
-                }) 
-            },
-            deep:true
+        isStart(){
+            return this.preview.list[this.group].indexOf(this.preview.current) ===0
+        },
+        isEnd(){
+            return this.preview.list[this.group].indexOf(this.preview.current) === this.preview.list[this.group].length - 1
+        },
+        rank(){
+            return (this.preview.list[this.group].indexOf(this.preview.current)+1)+"/"+this.preview.list[this.group].length
         }
     },
+    watch:{
+    },
     mounted(){
-        window.addEventListener("resize",this.reset)
+        // window.addEventListener("resize",this.reset)
+        window.addEventListener("click",this.leave)
     },
     methods: {
         leave (e) {
@@ -99,11 +101,11 @@ export default {
         },
         reset(){
             if(this.preview.show){
-                this.top = this.$refs.img.offsetTop-10
-                this.left = this.$refs.img.offsetLeft+this.$refs.img.clientWidth-10
+                // this.top = this.$refs.img.offsetTop-10
+                // this.left = this.$refs.img.offsetLeft+this.$refs.img.clientWidth-10
             }
         }
-    }
+    },
 }
 </script>
 
@@ -116,14 +118,15 @@ export default {
 }
 .lg-preview-wrapper {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
     text-align: center;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.76);
     z-index: 10000;
+    border-radius:6px;
 }
 .lg-preview-loading {
     position: absolute;
@@ -163,11 +166,11 @@ export default {
 }
 .lg-preview-img {
     max-width: 90%;
-    max-height: 90%;
+    max-height: 88%;
     display: block;
     position: absolute;
     left: 0;
-    top: 0;
+    top: 4%;
     bottom: 0;
     right: 0;
     margin: auto;
@@ -178,17 +181,18 @@ export default {
     margin-top: -15px;
     background: rgba(0, 0, 0, 0);
     line-height: 40px;
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
     border-top: 2px solid #fff;
     border-left: 2px solid #fff;
+    cursor: pointer;
 }
 .lg-preview-nav-left,
 .lg-preview-nav-right {
     position: absolute;
     height: 40%;
-    margin-top: 30vh;
-    width: 100px;
+    margin-top: 28vh;
+    width: 40px;
     top: 0;
     color: #fff;
     transition: opacity .2s;
@@ -198,7 +202,7 @@ export default {
 }
 .lg-preview-nav-left .lg-preview-nav-arrow {
     left: 0;
-    margin-left: 40px;
+    margin-left: 20px;
     transform: rotate(-45deg);
 }
 .lg-preview-nav-right {
@@ -206,21 +210,22 @@ export default {
 }
 .lg-preview-nav-right .lg-preview-nav-arrow {
     right: 0;
-    margin-right: 40px;
+    margin-right: 20px;
     transform: rotate(135deg);
 }
 .lg-preview-title {
     position: absolute;
     left: 0;
-    bottom: 0;
+    top: 1%;
     text-align: center;
     width: 100%;
     color: #fff;
-    background: rgba(0, 0, 0, .5);
+    /* background: rgba(0, 0, 0, .5); */
     box-sizing: border-box;
     font-size: 16px;
     height: 40px;
     line-height: 40px;
+    color: #ccc;
 }
 @media all and (max-width: 768px) {
     .lg-preview-nav-left,
@@ -236,13 +241,15 @@ export default {
 }
 .close{
    position: absolute;
-   background: red;
    color:#fff;
    width: 20px;
    height: 20px;
    border-radius: 10px;
    line-height: 20px;
-   font-size: 12px;
+   font-size: 32px;
    cursor: pointer;
+   z-index: 2;
+   top:10px;
+   right:10px
 }
 </style>

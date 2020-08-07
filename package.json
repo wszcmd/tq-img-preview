@@ -1,10 +1,9 @@
 {
   "name": "tq-img-preview",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "a img preview directive",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "vue",
     "directive"
@@ -20,7 +19,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": { "no-console": 0},
+    "rules": {
+      "no-console": 0
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
