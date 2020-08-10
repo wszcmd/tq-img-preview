@@ -77,6 +77,7 @@ export default {
       list:[
         {src:'http://img6.hangkong.com/118888-99.jpg?0',title:'747'},
         {src:'http://img6.hangkong.com/16165-99.jpg?0',title:'安225'},
+        {src:'http://img6.hangkong.com/8496-99.jpg?0',title:'歼20'},
         {src:'http://img6.hangkong.com/8496-99.jpg?0',title:'歼20'}
       ]
     }

@@ -1,27 +1,26 @@
 <template>
-    <transition name="fade">
-        <div class="lg-preview-wrapper" v-show="preview.show" @click.stop @touchmove.prevent>
-            <div class="lg-preview-loading" v-show="preview.loading"><div></div></div>
-             <img
-                ref="img"
-                class="lg-preview-img"
-                v-if="preview.current.src"
-                :src="preview.current.src"
-                :alt="preview.current.title"
-                v-show="!preview.loading"
-            >
-            <div class="close" @click="leave" >&times;</div>
-            <div class="lg-preview-title" v-if="preview.isTitleEnable&&preview.current.title" v-show="!preview.loading">
-                {{preview.current.title}}({{rank}})
-            </div>
-            <div class="lg-preview-nav-left" v-if="group!=='tqNoGroup'&&!isStart" >
-                <span class="lg-preview-nav-arrow"  @click.stop="preAction"></span>
-            </div> 
-            <div class="lg-preview-nav-right" v-if="group!=='tqNoGroup'&&!isEnd">
-                <span class="lg-preview-nav-arrow"  @click.stop="nextAction"></span>
-            </div>
-        </div>
-    </transition>
+  <transition name="fade">
+    <div class="lg-preview-wrapper" v-show="preview.show" @click.stop @touchmove.prevent>
+      <div class="lg-preview-loading" v-show="preview.loading"><div></div></div>
+        <img
+          ref="img"
+          class="lg-preview-img"
+          v-if="preview.current.src"
+          :src="preview.current.src"
+          :alt="preview.current.title"
+          v-show="!preview.loading" >
+      <div class="close" @click="leave" >&times;</div>
+      <div class="lg-preview-title" v-if="preview.isTitleEnable&&preview.current.title" v-show="!preview.loading">
+          {{preview.current.title}}{{group!=='tqNoGroup'?"("+rank+")":""}}
+      </div>
+      <div class="lg-preview-nav-left" v-if="group!=='tqNoGroup'&&!isStart" >
+          <span class="lg-preview-nav-arrow"  @click.stop="preAction"></span>
+      </div> 
+      <div class="lg-preview-nav-right" v-if="group!=='tqNoGroup'&&!isEnd">
+          <span class="lg-preview-nav-arrow"  @click.stop="nextAction"></span>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -40,14 +39,20 @@ export default {
         group () {
             return this.preview.current.group
         },
+        curIndex(){
+           return  this.preview.list[this.group]?this.preview.list[this.group].indexOf(this.preview.current):0
+        },
+        curLength(){
+           return this.preview.list[this.group]?this.preview.list[this.group].length :0
+        },
         isStart(){
-            return this.preview.list[this.group].indexOf(this.preview.current) ===0
+            return this.curIndex ===0
         },
         isEnd(){
-            return this.preview.list[this.group].indexOf(this.preview.current) === this.preview.list[this.group].length - 1
+            return this.curIndex === this.curLength - 1
         },
         rank(){
-            return (this.preview.list[this.group].indexOf(this.preview.current)+1)+"/"+this.preview.list[this.group].length
+            return (this.curIndex+1)+"/"+this.curLength
         }
     },
     watch:{
@@ -82,7 +87,7 @@ export default {
                 },500)
             }
         },
-        nextAction () {
+        nextAction () { 
             this.preview.loading = true
             var index = this.preview.list[this.group].indexOf(this.preview.current)
             if (index === this.preview.list[this.group].length - 1) {
